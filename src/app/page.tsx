@@ -1,10 +1,14 @@
-'use client'
-import HelloWorld from '@/md/README.mdx'
+"use client";
+import FeaturedPosts from "@/clients/FeaturedPosts";
+import HeroSection from "@/clients/HeroSection";
+import LatestPosts from "@/clients/LatestPosts";
 
 export default function Home() {
-  return (
-    <main className="container">
-      <HelloWorld />
-    </main>
-  )
+    return (
+        <main className="">
+            <HeroSection />
+            <FeaturedPosts />
+            <LatestPosts />
+        </main>
+    );
 }
