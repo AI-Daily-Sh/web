@@ -1,4 +1,3 @@
-"use client";
 import FeaturedPosts from "@/clients/FeaturedPosts";
 import HeroSection from "@/clients/HeroSection";
 import LatestPosts from "@/clients/LatestPosts";

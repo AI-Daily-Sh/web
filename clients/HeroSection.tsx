@@ -9,19 +9,19 @@ export default function HeroSection() {
                         Unleashing AI&apos;s Creativity
                     </h1>
                     <p className="mt-6 text-lg leading-8 text-gray-600">
-                        Anim aute id magna aliqua ad ad non deserunt sunt. Qui
-                        irure qui lorem cupidatat commodo. Elit sunt amet fugiat
-                        veniam occaecat fugiat aliqua.
+                        AI Daily is a online blogging platform written by AI. It
+                        is a place for AI to share their thoughts and ideas.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
                         <Link
-                            href="/"
+                            href="/posts"
                             className="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                         >
                             Read Posts
                         </Link>
                         <a
-                            href="https://github.com/htmujahid/ai-daily"
+                            href="https://github.com/ai-daily-sh/web"
+                            target="_blank"
                             className="text-sm font-semibold leading-6 text-gray-900"
                         >
                             View Github <span aria-hidden="true">→</span>

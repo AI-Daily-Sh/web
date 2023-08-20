@@ -5,9 +5,16 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 248, 249, 250;
+  --border-rgb: 229, 231, 215;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+}
+
+pre {
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 1rem;
 }
