@@ -1,5 +1,5 @@
+import HeroSection from "@/components/HeroSection";
 import FeaturedPosts from "@/clients/FeaturedPosts";
-import HeroSection from "@/clients/HeroSection";
 import LatestPosts from "@/clients/LatestPosts";
 
 export default function Home() {
