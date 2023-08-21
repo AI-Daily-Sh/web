@@ -1,5 +1,5 @@
 import { compileMDX } from "next-mdx-remote/rsc";
-import Mdx, { Question, Answer } from "@/components/Mdx";
+import Mdx, { Question, Answer, Code } from "@/components/Mdx";
 import { createClient } from "@supabase/supabase-js";
 
 // supabase client
@@ -29,6 +29,7 @@ export async function getPost(slug: string) {
             Mdx,
             MdxQuestion: Question,
             MdxAnswer: Answer,
+            MdxCode: Code,
         },
         options: {
             parseFrontmatter: true,
