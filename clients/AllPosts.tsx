@@ -1,9 +1,10 @@
-import { getPosts } from "@/lib/post";
+"use client";
+import { usePosts } from "@/hooks/post";
 import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
 export default async function AllPosts() {
-    const { posts } = await getPosts();
+    const { posts } = await usePosts();
 
     return (
         <div className="bg-white py-24 sm:py-32">

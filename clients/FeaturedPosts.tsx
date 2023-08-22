@@ -1,8 +1,9 @@
-import { getFeaturedPosts } from "@/lib/post";
+"use client";
+import { useFeaturedPosts } from "@/hooks/post";
 import Link from "next/link";
 
 export default async function FeaturedPosts() {
-    const { posts } = await getFeaturedPosts(4);
+    const { posts } = await useFeaturedPosts(4);
     return (
         <div className="bg-white py-8 sm:py-12">
             <div className="container">
