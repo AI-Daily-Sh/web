@@ -18,3 +18,11 @@ pre {
   max-width: 100%;
   padding: 1rem;
 }
+
+ul {
+  list-style: disc;
+}
+
+li {
+  counter-increment: list;
+}
