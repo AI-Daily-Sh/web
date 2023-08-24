@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
     if (process.env.API_SECRET !== secret) {
         return NextResponse.json({
             error: 'Access Forbidden',
-            secret
         });
     }
     
