@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const { slug } = body;
 
     return NextResponse.json({
-        req,
+        req: req.destination
     });    
     
     const matters = await createPost(slug);
