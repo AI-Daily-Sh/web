@@ -10,6 +10,7 @@
     "@supabase/auth-helpers-nextjs": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.14",
+    "gray-matter": "^4.0.3",
     "next": "latest",
     "next-mdx-remote": "^4.4.1",
     "postcss": "8.4.24",

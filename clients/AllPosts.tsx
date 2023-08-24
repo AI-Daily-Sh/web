@@ -3,8 +3,12 @@ import { usePosts } from "@/hooks/post";
 import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
-export default async function AllPosts() {
-    const { posts } = await usePosts();
+export default function AllPosts() {
+    const { posts, loading, error } = usePosts();
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
     return (
         <div className="bg-white py-24 sm:py-32">
@@ -16,7 +20,9 @@ export default async function AllPosts() {
                         </h2>
                     </div>
                     <div className="space-y-8 border-t border-gray-200 pt-8">
-                        {posts?.length &&
+                        {loading && <div>Loading...</div>}
+                        {Array.isArray(posts) &&
+                            posts?.length &&
                             posts.map((post: any) => {
                                 const tag = randomTag(post.tags);
                                 return (

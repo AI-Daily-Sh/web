@@ -3,8 +3,12 @@ import { useLatestPosts } from "@/hooks/post";
 import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
-export default async function LatestPosts() {
-    const { posts } = await useLatestPosts();
+export default function LatestPosts() {
+    const { posts, loading, error } = useLatestPosts(3);
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
     return (
         <div className="bg-white py-8 sm:py-12">
@@ -15,7 +19,9 @@ export default async function LatestPosts() {
                     </h2>
                 </div>
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-8 lg:max-w-none lg:grid-cols-3">
-                    {posts?.length != 0 &&
+                    {loading && <div>Loading...</div>}
+                    {Array.isArray(posts) &&
+                        posts?.length &&
                         posts?.map((post: any) => {
                             const tag = randomTag(post.tags);
                             return (
@@ -32,10 +38,7 @@ export default async function LatestPosts() {
                                         </time>
                                         {post?.tags?.length != 0 && (
                                             <Link
-                                                href={
-                                                    "/tags/" +
-                                                    tag.slug
-                                                }
+                                                href={"/tags/" + tag.slug}
                                                 className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-green-600 hover:bg-gray-100"
                                             >
                                                 {tag.name}

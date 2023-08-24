@@ -2,8 +2,13 @@
 import { usePostsByTag } from "@/hooks/post";
 import Link from "next/link";
 
-export default async function PostsByTag({ slug }: { slug: string }) {
-    const { posts } = await usePostsByTag(slug);
+export default function PostsByTag({ slug }: { slug: string }) {
+    const { posts, loading, error } = usePostsByTag(slug);
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
     return (
         <div className="px-4">
             <div className="mx-auto max-w-2xl">
@@ -13,7 +18,9 @@ export default async function PostsByTag({ slug }: { slug: string }) {
                     </h2>
                 </div>
                 <div className="space-y-8 border-t border-gray-200 pt-8">
-                    {posts?.length != 0 &&
+                    {loading && <div>Loading...</div>}
+                    {Array.isArray(posts) &&
+                        posts?.length &&
                         posts?.map((post: any) => (
                             <article
                                 key={post.id}

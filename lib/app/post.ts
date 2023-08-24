@@ -3,7 +3,7 @@ import Mdx, { Question, Answer, Code } from "@/components/Mdx";
 
 export async function getPost(slug: string) {
     const res = await fetch(
-        `https://raw.githubusercontent.com/AI-Daily-Sh/data/main/posts/${slug}.mdx`,
+        `${process.env.DATA_URL}/${slug}.mdx`,
         {
             headers: {
                 Accept: "application/vnd.github+json",

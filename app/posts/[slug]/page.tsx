@@ -1,4 +1,4 @@
-import { getPost } from "@/lib/post";
+import { getPost } from "@/lib/app/post";
 import Link from "next/link";
 
 export default async function Post({ params }: { params: { slug: string } }) {
