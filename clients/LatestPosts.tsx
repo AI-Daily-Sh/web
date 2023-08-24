@@ -19,7 +19,7 @@ export default function LatestPosts() {
                     </h2>
                 </div>
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-8 lg:max-w-none lg:grid-cols-3">
-                    {loading && <div>Loading...</div>}
+                    {loading && <LoadingSkeleton />}
                     {Array.isArray(posts) &&
                         posts?.length != 0 &&
                         posts?.map((post: any) => {
@@ -52,7 +52,7 @@ export default function LatestPosts() {
                                                 {post.title}
                                             </Link>
                                         </h3>
-                                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+                                        <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
                                             {post.excerpt}
                                         </p>
                                     </div>
@@ -63,4 +63,25 @@ export default function LatestPosts() {
             </div>
         </div>
     );
+}
+
+function LoadingSkeleton() {
+    return Array(3)
+        .fill(0)
+        .map((_, i) => (
+            <div key={i} className="flex flex-col max-w-xl">
+                <div className="flex items-center animate-pulse w-full space-x-4 mb-6">
+                    <div className="h-3 bg-gray-200 rounded-full w-16"></div>
+                    <div className="h-4 bg-gray-300 rounded-full w-24"></div>
+                </div>
+                <div role="status" className="animate-pulse w-full">
+                    <div className="h-4 bg-gray-200 rounded-full w-4/6 mb-4"></div>
+                    <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                    <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                    <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                    <div className="h-2 bg-gray-200 rounded-full w-5/6"></div>
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        ));
 }
