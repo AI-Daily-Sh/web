@@ -36,14 +36,13 @@ export async function getPosts() {
 
 export async function getPostsByTag(tagSlug: string) {
     // fetch posts from supabase
-    const { data, error } = await supabase.from("posts").select(
+    const { data, error } = await supabase.from("tags").eq('slug', tagSlug).select(
         `
         id,
-        title,
+        name,
         slug,
-        excerpt,
         created_at,
-        tags ( id, name, slug )
+        posts ( id, title, slug, excerpt, created_at)
         `
     );
 
@@ -61,13 +60,9 @@ export async function getPostsByTag(tagSlug: string) {
         };
     }
 
-    const posts = data.filter((post) => {
-        return post.tags.some((tag) => tag.slug === tagSlug);
-    });
-
     // return posts
     return {
-        data: posts,
+        data: data[0].posts,
     };
 }
 
