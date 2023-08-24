@@ -13,6 +13,10 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+    const secret = req.nextUrl.searchParams.get('secret')
+    if (process.env.API_SECRET !== secret) {
+        return NextResponse.error();
+    }
     const body = await req.json();
     const { slug } = body; 
     
