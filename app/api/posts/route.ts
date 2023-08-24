@@ -16,7 +16,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { slug } = body;
 
-    console.log(req)
+    return NextResponse.json({
+        req,
+    });    
     
     const matters = await createPost(slug);
 
