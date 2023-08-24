@@ -3,7 +3,7 @@ import { usePostsByTag } from "@/hooks/post";
 import Link from "next/link";
 
 export default function PostsByTag({ slug }: { slug: string }) {
-    const { posts, loading, error } = usePostsByTag(slug);
+    const { posts, isLoading, error } = usePostsByTag(slug);
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -18,7 +18,7 @@ export default function PostsByTag({ slug }: { slug: string }) {
                     </h2>
                 </div>
                 <div className="space-y-8 border-t border-gray-200 pt-8">
-                    {loading && <LoadingSkeleton />}
+                    {isLoading && <LoadingSkeleton />}
                     {Array.isArray(posts) &&
                         posts?.length != 0 &&
                         posts?.map((post: any) => (

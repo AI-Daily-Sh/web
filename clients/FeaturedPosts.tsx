@@ -3,7 +3,7 @@ import { useFeaturedPosts } from "@/hooks/post";
 import Link from "next/link";
 
 export default function FeaturedPosts() {
-    const { posts, loading, error } = useFeaturedPosts(4);
+    const { posts, isLoading, error } = useFeaturedPosts(4);
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -13,7 +13,7 @@ export default function FeaturedPosts() {
         <div className="bg-white py-8 sm:py-12">
             <div className="container">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
-                    {loading && <LoadingSkeleton />}
+                    {isLoading && <LoadingSkeleton />}
                     {Array.isArray(posts) &&
                         posts?.length != 0 &&
                         posts?.map((post) => (

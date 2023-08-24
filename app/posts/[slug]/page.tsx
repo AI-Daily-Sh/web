@@ -1,4 +1,4 @@
-import { getPost } from "@/lib/app/post";
+import { getPost } from "@/lib/app/posts";
 import Link from "next/link";
 import { Suspense } from "react";
 

@@ -1,15 +1,16 @@
-import useFetcher from "./useFetcher";
+import fetcher from "@/lib/app/fetcher";
+import useSWR from 'swr'
 
 export function usePosts() {
     const {
         data: posts,
-        loading,
+        isLoading,
         error,
-    } = useFetcher("/api/posts");
+    } = useSWR("/api/posts", fetcher);
 
     return {
         posts,
-        loading,
+        isLoading,
         error,
     };
 }
@@ -17,13 +18,13 @@ export function usePosts() {
 export function useLatestPosts(limit?: number) {
     const {
         data: posts,
-        loading,
+        isLoading,
         error,
-    } = useFetcher(`/api/posts/latest?limit=${limit}`);
+    } = useSWR(`/api/posts/latest?limit=${limit}`, fetcher);
 
     return {
         posts,
-        loading,
+        isLoading,
         error,
     };
 }
@@ -31,13 +32,13 @@ export function useLatestPosts(limit?: number) {
 export function useFeaturedPosts(limit?: number) {    
     const {
         data: posts,
-        loading,
+        isLoading,
         error,
-    } = useFetcher(`/api/posts/featured?limit=${limit}`);
+    } = useSWR(`/api/posts/featured?limit=${limit}`, fetcher);
 
     return {
         posts,
-        loading,
+        isLoading,
         error,
     };
 }
@@ -45,13 +46,13 @@ export function useFeaturedPosts(limit?: number) {
 export function usePostsByTag(tagSlug: string) {
     const {
         data: posts,
-        loading,
+        isLoading,
         error,
-    } = useFetcher(`/api/posts/tag/${tagSlug}`);
+    } = useSWR(`/api/posts/tag/${tagSlug}`, fetcher);
 
     return {
         posts,
-        loading,
+        isLoading,
         error,
     };
 }

@@ -4,7 +4,7 @@ import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
 export default function LatestPosts() {
-    const { posts, loading, error } = useLatestPosts(3);
+    const { posts, isLoading, error } = useLatestPosts(3);
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -19,7 +19,7 @@ export default function LatestPosts() {
                     </h2>
                 </div>
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-8 lg:max-w-none lg:grid-cols-3">
-                    {loading && <LoadingSkeleton />}
+                    {isLoading && <LoadingSkeleton />}
                     {Array.isArray(posts) &&
                         posts?.length != 0 &&
                         posts?.map((post: any) => {

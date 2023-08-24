@@ -4,7 +4,7 @@ import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
 export default function AllPosts() {
-    const { posts, loading, error } = usePosts();
+    const { posts, isLoading, error } = usePosts();
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -20,7 +20,7 @@ export default function AllPosts() {
                         </h2>
                     </div>
                     <div className="space-y-8 border-t border-gray-200 pt-8">
-                        {loading && <LoadingSkeleton />}
+                        {isLoading && <LoadingSkeleton />}
                         {Array.isArray(posts) &&
                             posts?.length != 0 &&
                             posts.map((post: any) => {
