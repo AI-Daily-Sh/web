@@ -15,7 +15,7 @@ export default function FeaturedPosts() {
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
                     {loading && <div>Loading...</div>}
                     {Array.isArray(posts) &&
-                        posts?.length &&
+                        posts?.length != 0 &&
                         posts?.map((post) => (
                             <div key={post.id}>
                                 <time

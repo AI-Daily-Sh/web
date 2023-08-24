@@ -21,7 +21,7 @@ export default function LatestPosts() {
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-8 lg:max-w-none lg:grid-cols-3">
                     {loading && <div>Loading...</div>}
                     {Array.isArray(posts) &&
-                        posts?.length &&
+                        posts?.length != 0 &&
                         posts?.map((post: any) => {
                             const tag = randomTag(post.tags);
                             return (

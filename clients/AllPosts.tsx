@@ -22,7 +22,7 @@ export default function AllPosts() {
                     <div className="space-y-8 border-t border-gray-200 pt-8">
                         {loading && <div>Loading...</div>}
                         {Array.isArray(posts) &&
-                            posts?.length &&
+                            posts?.length != 0 &&
                             posts.map((post: any) => {
                                 const tag = randomTag(post.tags);
                                 return (
