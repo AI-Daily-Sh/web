@@ -36,7 +36,7 @@ export async function getPosts() {
 
 export async function getPostsByTag(tagSlug: string) {
     // fetch posts from supabase
-    const { data, error } = await supabase.from("tags").eq('slug', tagSlug).select(
+    const { data, error } = await supabase.from("tags").select(
         `
         id,
         name,
@@ -44,7 +44,7 @@ export async function getPostsByTag(tagSlug: string) {
         created_at,
         posts ( id, title, slug, excerpt, created_at)
         `
-    );
+    ).eq('slug', tagSlug);
 
     // if error, return error
     if (error) {
