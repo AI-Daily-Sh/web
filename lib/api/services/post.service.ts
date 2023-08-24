@@ -3,8 +3,9 @@ import { insertTag } from "@/lib/api/db/tag";
 import matter from "gray-matter";
 
 export async function createPost(slug: string) {
+    const fileName = slug.split(".")[0];
     const res = await fetch(
-        `${process.env.DATA_URL}/${slug}.mdx`,
+        `${process.env.DATA_URL}/${fileName}.mdx`,
         {
             headers: {
                 Accept: "application/vnd.github+json",
