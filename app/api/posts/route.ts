@@ -16,7 +16,9 @@ export async function POST(req: NextRequest) {
     const secret = req.nextUrl.searchParams.get('secret')
     
     if (process.env.API_SECRET !== secret) {
-        return NextResponse.error();
+        return NextResponse.json({
+            error: 'Access Forbidden'
+        });
     }
     
     const body = await req.json();
