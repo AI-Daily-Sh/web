@@ -3,7 +3,7 @@ import { useFeaturedPosts } from "@/hooks/post";
 import Link from "next/link";
 
 export default function FeaturedPosts() {
-    const { posts, isLoading, error } = useFeaturedPosts(4);
+    const { posts, isLoading, error } = useFeaturedPosts("4");
 
     if (error) {
         return <div>Error: {error.message}</div>;

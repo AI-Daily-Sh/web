@@ -4,7 +4,7 @@ import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
 export default function LatestPosts() {
-    const { posts, isLoading, error } = useLatestPosts(3);
+    const { posts, isLoading, error } = useLatestPosts("3");
 
     if (error) {
         return <div>Error: {error.message}</div>;
