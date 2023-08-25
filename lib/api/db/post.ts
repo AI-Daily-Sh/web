@@ -36,15 +36,18 @@ export async function getPosts() {
 
 export async function getPostsByTag(tagSlug: string) {
     // fetch posts from supabase
-    const { data, error } = await supabase.from("tags").select(
-        `
+    const { data, error } = await supabase
+        .from("tags")
+        .select(
+            `
         id,
         name,
         slug,
         created_at,
         posts ( id, title, slug, excerpt, created_at)
         `
-    ).eq('slug', tagSlug);
+        )
+        .eq("slug", tagSlug);
 
     // if error, return error
     if (error) {
@@ -62,7 +65,12 @@ export async function getPostsByTag(tagSlug: string) {
 
     // return posts
     return {
-        data: data[0].posts,
+        data: data[0].posts.sort((a: any, b: any) => {
+            return (
+                new Date(b.created_at).getTime() -
+                new Date(a.created_at).getTime()
+            );
+        }),
     };
 }
 
@@ -131,7 +139,9 @@ export async function getFeaturedPosts(limit?: string) {
     const shuffledPosts = shuffleArray(data);
 
     // If a limit is provided, take a subset of the shuffled posts
-    const featuredPosts = limit ? shuffledPosts.slice(0, Number(limit)) : shuffledPosts;
+    const featuredPosts = limit
+        ? shuffledPosts.slice(0, Number(limit))
+        : shuffledPosts;
 
     // return shuffled and limited posts
     return {
