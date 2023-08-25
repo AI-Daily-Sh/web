@@ -149,6 +149,77 @@ export async function getFeaturedPosts(limit?: string) {
     };
 }
 
+export async function updatePostViewCount(slug: string) {
+    const { data: posts, error: postsError } = await supabase
+        .from("posts")
+        .select()
+        .eq("slug", slug);
+
+    if (postsError) {
+        return {
+            error: postsError,
+        };
+    }
+
+    if (!posts || posts.length === 0) {
+        return {
+            error: "No posts found",
+        };
+    }
+
+    const post = posts[0];
+
+    const { data: postViews, error: postViewsError } = await supabase
+        .from("post_views")
+        .select()
+        .eq("post_id", post.id);
+
+    if (postViewsError) {
+        return {
+            error: postViewsError,
+        };
+    }
+
+    if (!postViews || postViews.length === 0) {
+        const { data: newPostView, error: newPostViewError } = await supabase
+            .from("post_views")
+            .insert([
+                {
+                    post_id: post.id,
+                    view_count: 1,
+                },
+            ])
+            .select();
+
+        if (newPostViewError) {
+            return {
+                error: newPostViewError,
+            };
+        }
+
+        return {
+            data: newPostView,
+        };
+    }
+
+    const { data: updatedPostView, error: updatedPostViewError } =
+        await supabase
+            .from("post_views")
+            .update({ view_count: postViews[0].view_count + 1 })
+            .eq("post_id", post.id)
+            .select();
+
+    if (updatedPostViewError) {
+        return {
+            error: updatedPostViewError,
+        };
+    }
+
+    return {
+        data: updatedPostView,
+    };
+}
+
 export async function insertPost(title: string, slug: string, excerpt: string) {
     const date = getCurrentFormattedDate();
     const { data: existingPost } = await supabase

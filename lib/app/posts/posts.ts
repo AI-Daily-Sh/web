@@ -44,3 +44,20 @@ export async function getPost(slug: string) {
         content,
     };
 }
+
+export async function incrementPostViewCount(slug: string){
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_WEB_URL}/api/posts/${slug}/views`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ slug }),
+        }
+    );
+
+    const data = await res.json();
+
+    return data;
+}

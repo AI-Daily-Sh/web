@@ -27,6 +27,6 @@ export async function POST(req: NextRequest) {
     const matters = await createPost(slug);
 
     return NextResponse.json({
-        matters,
+        data: matters,
     });
 }

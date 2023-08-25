@@ -1,6 +1,7 @@
 import { getPost } from "@/lib/app/posts";
 import Link from "next/link";
 import { Suspense } from "react";
+import PostViewsCount from "@/clients/PostViewsCount";
 
 export default async function Post({ params }: { params: { slug: string } }) {
     const { frontmatter, content } = await getPost(params.slug);
@@ -13,8 +14,11 @@ export default async function Post({ params }: { params: { slug: string } }) {
                         <h1 className="text-gray-70 text-3xl font-bold leading-tight sm:text-4xl">
                             {frontmatter.title}
                         </h1>
-                        <div className="pt-3 text-sm text-gray-400 sm:pt-4">
-                            {frontmatter.date}
+                        <div className="flex gap-x-6 pt-3 text-sm text-gray-400 sm:pt-4">
+                            <div>
+                                {frontmatter.date}
+                            </div>
+                            <PostViewsCount slug={params.slug} />
                         </div>
                         <div className="my-3 text-sm text-green-600 sm:my-4 flex gap-2 flex-wrap">
                             {frontmatter.tags.map((tag: any) => (
