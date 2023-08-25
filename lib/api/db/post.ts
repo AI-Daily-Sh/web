@@ -111,16 +111,14 @@ export async function getLatestPosts(limit?: string) {
 }
 
 export async function getFeaturedPosts(limit?: string) {
-    const { data, error } = await supabase.from("posts").select(
+    const { data, error } = await supabase.from("post_views").select(`
+        post_id,
+        view_count,
+        posts ( id, title, slug, excerpt, created_at, tags ( id, name, slug ) )
         `
-        id,
-        title,
-        slug,
-        excerpt,
-        created_at,
-        tags ( id, name, slug )
-        `
-    );
+    )
+    .order("view_count", { ascending: false })
+    .limit(Number(limit) ?? 4);
 
     // if error, return error
     if (error) {
@@ -136,16 +134,9 @@ export async function getFeaturedPosts(limit?: string) {
         };
     }
 
-    const shuffledPosts = shuffleArray(data);
-
-    // If a limit is provided, take a subset of the shuffled posts
-    const featuredPosts = limit
-        ? shuffledPosts.slice(0, Number(limit))
-        : shuffledPosts;
-
     // return shuffled and limited posts
     return {
-        data: featuredPosts,
+        data: data.map((post: any) => post.posts).flat(),
     };
 }
 
