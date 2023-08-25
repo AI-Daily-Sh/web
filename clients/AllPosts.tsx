@@ -1,10 +1,11 @@
 "use client";
+import Pagination from "@/components/Pagination";
 import { usePosts } from "@/hooks/post";
 import { randomTag } from "@/utils/tags";
 import Link from "next/link";
 
-export default function AllPosts() {
-    const { posts, isLoading, error } = usePosts();
+export default function AllPosts({ limit, page }: { limit?: string; page?: string}) {    
+    const { posts, isLoading, error } = usePosts(limit ?? "", page ?? "");
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -19,11 +20,11 @@ export default function AllPosts() {
                             From the Posts
                         </h2>
                     </div>
-                    <div className="space-y-8 border-t border-gray-200 pt-8">
+                    <div className="space-y-8 border-t border-gray-200 py-8">
                         {isLoading && <LoadingSkeleton />}
-                        {Array.isArray(posts) &&
-                            posts?.length != 0 &&
-                            posts.map((post: any) => {
+                        {Array.isArray(posts?.data) &&
+                            posts?.data?.length != 0 &&
+                            posts.data.map((post: any) => {
                                 const tag = randomTag(post.tags);
                                 return (
                                     <article
@@ -63,6 +64,7 @@ export default function AllPosts() {
                                 );
                             })}
                     </div>
+                    <Pagination meta={posts?.meta} />
                 </div>
             </div>
         </div>

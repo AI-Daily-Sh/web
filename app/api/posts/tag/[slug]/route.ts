@@ -5,7 +5,10 @@ export async function GET(
     req: NextRequest,
     { params }: { params: { slug: string } }
 ) {
-    const { data, error } = await getPostsByTag(params.slug);
+    const limit = req.nextUrl.searchParams.get("limit");
+    const page = req.nextUrl.searchParams.get("page");    
+
+    const { data, error } = await getPostsByTag(params.slug, limit ?? "", page ?? "");
 
     if (error) {
         return NextResponse.error();

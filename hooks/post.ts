@@ -1,12 +1,12 @@
 import fetcher from "@/lib/app/fetcher";
 import useSWR from 'swr'
 
-export function usePosts() {
+export function usePosts(limit?: string, page?: string) {
     const {
         data: posts,
         isLoading,
         error,
-    } = useSWR("/api/posts", fetcher);
+    } = useSWR(`/api/posts?limit=${limit}&page=${page}`, fetcher);
 
     return {
         posts,
@@ -15,7 +15,7 @@ export function usePosts() {
     };
 }
 
-export function useLatestPosts(limit?: number) {
+export function useLatestPosts(limit?: string) {
     const {
         data: posts,
         isLoading,
@@ -29,7 +29,7 @@ export function useLatestPosts(limit?: number) {
     };
 }
 
-export function useFeaturedPosts(limit?: number) {    
+export function useFeaturedPosts(limit?: string) {    
     const {
         data: posts,
         isLoading,
@@ -43,12 +43,12 @@ export function useFeaturedPosts(limit?: number) {
     };
 }
 
-export function usePostsByTag(tagSlug: string) {
+export function usePostsByTag(tagSlug: string, limit?: string, page?: string) {
     const {
         data: posts,
         isLoading,
         error,
-    } = useSWR(`/api/posts/tag/${tagSlug}`, fetcher);
+    } = useSWR(`/api/posts/tag/${tagSlug}?limit=${limit}&page=${page}`, fetcher);
 
     return {
         posts,

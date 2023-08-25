@@ -1,9 +1,10 @@
 "use client";
+import Pagination from "@/components/Pagination";
 import { usePostsByTag } from "@/hooks/post";
 import Link from "next/link";
 
-export default function PostsByTag({ slug }: { slug: string }) {
-    const { posts, isLoading, error } = usePostsByTag(slug);
+export default function PostsByTag({ slug, limit, page }: { slug: string, limit?: string; page?: string }) {
+    const { posts, isLoading, error } = usePostsByTag(slug, limit ?? "", page ?? "");
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -17,11 +18,11 @@ export default function PostsByTag({ slug }: { slug: string }) {
                         From the {slug.charAt(0).toUpperCase() + slug.slice(1)}
                     </h2>
                 </div>
-                <div className="space-y-8 border-t border-gray-200 pt-8">
+                <div className="space-y-8 border-t border-gray-200 py-8">
                     {isLoading && <LoadingSkeleton />}
-                    {Array.isArray(posts) &&
-                        posts?.length != 0 &&
-                        posts?.map((post: any) => (
+                    {Array.isArray(posts?.data) &&
+                        posts?.data?.length != 0 &&
+                        posts.data.map((post: any) => (
                             <article
                                 key={post.id}
                                 className="flex max-w-xl flex-col items-start justify-between"
@@ -57,6 +58,7 @@ export default function PostsByTag({ slug }: { slug: string }) {
                             </article>
                         ))}
                 </div>
+                <Pagination meta={posts?.meta} />
             </div>
         </div>
     );

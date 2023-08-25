@@ -1,8 +1,15 @@
 import supabase from "@/supabase/init";
-import { shuffleArray } from "@/utils/array";
 import { getCurrentFormattedDate } from "@/utils/date";
+import pagination, { getEndLimit, getStartLimit } from "@/utils/pagination";
 
-export async function getPosts() {
+export async function getPosts(limit?: string, page?: string) {
+    const startLimit = getStartLimit(Number(page), Number(limit));
+    const endLimit = getEndLimit(Number(page), Number(limit));
+
+    const { count: totalCount } = await supabase
+        .from("posts")
+        .select("id", { count: "exact", head: true });
+
     const { data, error } = await supabase
         .from("posts")
         .select(
@@ -15,6 +22,7 @@ export async function getPosts() {
             tags ( id, name, slug )
             `
         )
+        .range(startLimit, endLimit)
         .order("created_at", { ascending: false });
 
     if (error) {
@@ -30,11 +38,23 @@ export async function getPosts() {
     }
 
     return {
-        data,
+        data: pagination(
+            data,
+            Number(page),
+            Number(limit),
+            totalCount ?? 0
+        ),
     };
 }
 
-export async function getPostsByTag(tagSlug: string) {
+export async function getPostsByTag(
+    tagSlug: string,
+    limit?: string,
+    page?: string
+) {
+    const startLimit = getStartLimit(Number(page), Number(limit));
+    const endLimit = getEndLimit(Number(page), Number(limit));    
+
     // fetch posts from supabase
     const { data, error } = await supabase
         .from("tags")
@@ -63,14 +83,20 @@ export async function getPostsByTag(tagSlug: string) {
         };
     }
 
+    const sortedData = data[0].posts.slice(startLimit, endLimit + 1).sort((a: any, b: any) => {
+        return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+    });
+
     // return posts
     return {
-        data: data[0].posts.sort((a: any, b: any) => {
-            return (
-                new Date(b.created_at).getTime() -
-                new Date(a.created_at).getTime()
-            );
-        }),
+        data: pagination(
+            sortedData,
+            Number(page),
+            Number(limit),
+            data[0].posts.length ?? 0
+        ),
     };
 }
 
@@ -111,14 +137,17 @@ export async function getLatestPosts(limit?: string) {
 }
 
 export async function getFeaturedPosts(limit?: string) {
-    const { data, error } = await supabase.from("post_views").select(`
+    const { data, error } = await supabase
+        .from("post_views")
+        .select(
+            `
         post_id,
         view_count,
         posts ( id, title, slug, excerpt, created_at, tags ( id, name, slug ) )
         `
-    )
-    .order("view_count", { ascending: false })
-    .limit(Number(limit) ?? 4);
+        )
+        .order("view_count", { ascending: false })
+        .limit(Number(limit) ?? 4);
 
     // if error, return error
     if (error) {
